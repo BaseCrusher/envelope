@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 
 	"github.com/BaseCrusher/envelope"
 )
@@ -17,7 +18,7 @@ func main() {
 	if err == nil {
 		if *out == "" {
 			_, err = os.Stdout.Write(doc)
-		} else {
+		} else if err = os.MkdirAll(filepath.Dir(*out), 0o755); err == nil {
 			err = os.WriteFile(*out, doc, 0o644)
 		}
 	}
